@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
-//const fs = require('fs');
-//const generatePage = require('./src/page-template.js');
+const fs = require('fs');
+const generatePage = require('./src/page-template.js');
 
 //const pageHTML = generatePage(name, github);
 
@@ -142,5 +142,18 @@ Add a New Project
 promptUser()
   .then(promptProject)
   .then(portfolioData => {
-    console.log(portfolioData);
+    return generatePage(portfolioData);
+  })
+  .then(pageHTML => {
+    return writeFile(pageHTML);
+  })
+  .then(writeFileResponse => {
+    console.log(writeFileResponse);
+    return copyFile();
+  })
+  .then(copyFileResponse => {
+    console.log(copyFileResponse);
+  })
+  .catch(err => {
+    console.log(err);
   });
